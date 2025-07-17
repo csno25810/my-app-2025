@@ -1,24 +1,15 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Calendar from './pages/Calendar';
-import Tasks from './pages/Tasks';
+import React from "react";
+import CalendarView from "./components/CalendarView";
+import "./App.css";
 
 function App() {
   return (
-    <Router>
-      <div>
-        <nav style={{ marginBottom: '20px' }}>
-          <a href="/" style={{ marginRight: '10px' }}>カレンダー</a>
-          <a href="/tasks">課題管理</a>
-        </nav>
-
-        <Routes>
-          <Route path="/" element={<Calendar />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/tasks" element={<Tasks />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="App">
+      <header className="App-header">カレンダーアプリ</header>
+      <main className="App-main">
+        <CalendarView />
+      </main>
+    </div>
   );
 }
 
