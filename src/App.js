@@ -14,6 +14,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Calendar />} />
+          <Route path="/calendar" element={<Calendar />} />
           <Route path="/tasks" element={<Tasks />} />
         </Routes>
       </div>
