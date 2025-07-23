@@ -1,71 +1,72 @@
-# Getting Started with Create React App
+📅 My Calendar App（仮完成版）
+大学生の生活に寄り添う、シンプルで機能的なカレンダーWebアプリです。予定の管理だけでなく、将来的には日記・収支・食事記録の機能も備える予定です。
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🚀 特徴（現状の実装）
+月表示のカレンダー（予定の追加・表示・削除が可能）
 
-## Available Scripts
+カレンダー下部の 固定メニュー（カレンダー・設定）
 
-In the project directory, you can run:
+メニューの「＋」ボタンから「日記」「収支」「食事」を追加可能（選択肢は動的に減る）
 
-### `npm start`
+ダークモード切替対応（設定画面）
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+テーマカラー変更対応（背景カラー変更）
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+ローディング画面でファビコンが回転（1周アニメーション）
 
-### `npm test`
+シンプルで軽量なUI（Tailwind CSS使用）
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+✨ 今後追加予定の機能
+週表示／日表示のカレンダー表示
 
-### `npm run build`
+各メニュー（日記・収支・食事）の実装
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+予定の編集機能
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+ローカルストレージへのデータ保存
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+スマホ・PCでの完全レスポンシブ対応
 
-### `npm run eject`
+🛠 使用技術
+技術	用途
+React	フロントエンドフレームワーク
+Tailwind CSS	UIスタイリング
+Vite	高速ビルドツール
+Git + GitHub	バージョン管理・公開
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+🧑‍💻 使用方法
+bash
+コピーする
+# 1. リポジトリをクローン
+git clone https://github.com/csno25810/my-app-2025.git
+cd my-app-2025
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# 2. 必要なパッケージをインストール
+npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# 3. アプリを起動
+npm run dev
+ブラウザで http://localhost:5173 にアクセスしてください。
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+📁 ディレクトリ構成（抜粋）
+arduino
+コピーする
+my-app-2025/
+├── public/
+│   └── favicon.png
+├── src/
+│   ├── App.js
+│   ├── index.js
+│   ├── pages/
+│   │   └── CalendarView.js
+│   ├── components/
+│   │   └── LoadingScreen.js
+│   └── ...
+├── tailwind.config.js
+└── README.md
+🎨 テーマカラー参考（ファビコンブルー）
+#5AC8FA （Tailwindでは bg-sky-200 相当）
 
-## Learn More
+🔖 ライセンス
+MIT
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# my-app-2025　プロジェクトの概要を記述します。
