@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-// LoadingScreen Component
-function LoadingScreen() {
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white">
-      <div className="w-20 h-20 flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
-      </div>
-    </div>
-  );
-}
+import LoadingScreen from './components/LoadingScreen';
 
 // Simple Calendar Component
 function SimpleCalendar({ view, events, onDateClick, onEventClick }) {
@@ -128,8 +118,8 @@ function SimpleCalendar({ view, events, onDateClick, onEventClick }) {
                 <div className="mt-1 space-y-1">
                   {dayEvents.map((event, eventIndex) => (
                     <div
-                      key={eventIndex}
-                      className="text-xs bg-blue-100 text-blue-800 px-1 py-0.5 rounded truncate cursor-pointer hover:bg-blue-200"
+                      key={eventIndex}//予定
+                      className="text-xs bg-blue-100 text-blue-600 px-1 py-0.5 rounded truncate cursor-pointer hover:bg-blue-200"
                       onClick={(e) => {
                         e.stopPropagation();
                         onEventClick(event);
@@ -199,6 +189,7 @@ function CalendarView({ view }) {
 
   return (
     <div className="flex-1 p-4">
+
       <SimpleCalendar
         view={view}
         events={events}
@@ -212,16 +203,33 @@ function CalendarView({ view }) {
 // Main App Component
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false); // ← 上に移動する！
   const [view, setView] = useState('month');
   const [activeMenu, setActiveMenu] = useState('カレンダー');
   const [menuItems, setMenuItems] = useState([
     'カレンダー',
-    '設定', 
-    '日記',
-    '収支',
-    '食事'
+    '設定'
   ]);
+
+  const menuOptions = ['日記', '収支', '食事'];
+  const remainingOptions = menuOptions.filter(item => !menuItems.includes(item));
+  const [isAddMenuOpen, setIsAddMenuOpen] = useState(false);
+  <button
+  onClick={() => setIsAddMenuOpen(true)} // ← 修正ここ
+  className={`flex-1 py-3 px-2 text-center rounded-lg transition-colors text-sm ${
+    activeMenu === '+'  // メニュー名が "+" になることは基本ないので false 扱いでOK
+      ? 'bg-white dark:bg-gray-700 text-blue-600 font-medium shadow-sm'
+      : 'text-gray-700 dark:text-gray-100 hover:bg-white dark:hover:bg-gray-600'
+  }`}
+>
+  ＋
+</button>
+
   const [themeColor, setThemeColor] = useState('bg-sky-200');
+
+  useEffect(() => {//ダークモード
+    document.documentElement.classList.toggle('dark', isDarkMode);
+  }, [isDarkMode]);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 2000);
@@ -240,14 +248,14 @@ function App() {
   };
 
   if (isLoading) {
-    return <LoadingScreen />;
+    return <LoadingScreen size={180} shape="rounded-full" />;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-white shadow-sm border-b p-4">
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <header className="bg-white dark:bg-gray-800 shadow-sm border-b p-4">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <h1 className="text-2xl font-bold text-gray-800">カレンダーアプリ</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">カレンダーアプリ</h1>
           
           <div className="flex gap-2">
             {[
@@ -258,9 +266,9 @@ function App() {
               <button
                 key={viewOption.key}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  view === viewOption.key
+                  view === viewOption.key//選択している月・週・日ボタン
                     ? 'bg-blue-500 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100 hover:bg-gray-200'
                 }`}
                 onClick={() => setView(viewOption.key)}
               >
@@ -288,7 +296,8 @@ function App() {
                     { color: 'bg-green-200', name: '緑' },
                     { color: 'bg-purple-200', name: '紫' },
                     { color: 'bg-pink-200', name: 'ピンク' },
-                    { color: 'bg-orange-200', name: 'オレンジ' }
+                    { color: 'bg-orange-200', name: 'オレンジ' },
+                    { color: 'bg-gray-300', name: '灰色' }
                   ].map((theme) => (
                     <button
                       key={theme.color}
@@ -301,6 +310,14 @@ function App() {
                   ))}
                 </div>
               </div>
+              <label className="flex items-center space-x-2">
+                <span>ダークモード</span>
+                <input
+                  type="checkbox"
+                  checked={isDarkMode}
+                  onChange={(e) => setIsDarkMode(e.target.checked)}
+                />
+              </label>
             </div>
           </div>
         )}
@@ -326,7 +343,7 @@ function App() {
         {!['カレンダー', '設定', '日記', '収支', '食事'].includes(activeMenu) && (
           <div className="p-6">
             <h2 className="text-xl font-bold mb-4">{activeMenu}</h2>
-            <p className="text-gray-600">{activeMenu}機能は開発中です。</p>
+            <p className="text-gray-600 dark:text-gray-300">「{activeMenu}」機能は開発中です。</p>
           </div>
         )}
 
@@ -340,15 +357,44 @@ function App() {
         )}
       </main>
 
-      <nav className={`fixed bottom-0 left-0 right-0 ${themeColor} border-t border-gray-200 p-2`}>
+      {isAddMenuOpen && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white p-4 rounded-lg shadow-lg">
+      <h3 className="text-lg font-semibold mb-2">追加するメニューを選んでください</h3>
+      <div className="flex flex-col space-y-2">
+        {remainingOptions.map(option => (
+          <button
+            key={option}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            onClick={() => {
+              setMenuItems([...menuItems, option]);
+              setIsAddMenuOpen(false);
+            }}
+          >
+            {option}
+          </button>
+        ))}
+        <button
+          className="mt-2 text-gray-500 hover:underline"
+          onClick={() => setIsAddMenuOpen(false)}
+        >
+          キャンセル
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
+      <nav className={`fixed bottom-0 left-0 right-0 ${themeColor} dark:bg-gray-800 border-t border-gray-200 p-2`}>
         <div className="flex items-center justify-around max-w-7xl mx-auto">
           {menuItems.map((item) => (
             <button
               key={item}
               className={`flex-1 py-3 px-2 text-center rounded-lg transition-colors text-sm ${
                 activeMenu === item
-                  ? 'bg-white text-blue-600 font-medium shadow-sm'
-                  : 'text-gray-700 hover:bg-white hover:bg-opacity-50'
+                ? 'bg-white dark:bg-gray-700 text-blue-600 font-medium shadow-sm'
+                : 'text-gray-700 dark:text-gray-100 hover:bg-white dark:hover:bg-gray-600'
               }`}
               onClick={() => setActiveMenu(item)}
             >
@@ -356,11 +402,16 @@ function App() {
             </button>
           ))}
           <button
-            onClick={handleAddMenuItem}
-            className="w-12 h-12 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors flex items-center justify-center font-bold text-xl ml-2 flex-shrink-0"
-          >
-            +
-          </button>
+  onClick={() => setIsAddMenuOpen(true)} // ← 修正点！
+  className={`flex-1 py-3 px-2 text-center rounded-lg transition-colors text-sm ${
+    activeMenu === '+'  // メニュー名が "+" になることは基本ないので false 扱いでOK
+      ? 'bg-white dark:bg-gray-700 text-blue-600 font-medium shadow-sm'
+      : 'text-gray-700 dark:text-gray-100 hover:bg-white dark:hover:bg-gray-600'
+  }`}
+>
+  ＋
+</button>
+
         </div>
       </nav>
     </div>
