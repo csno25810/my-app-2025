@@ -4,7 +4,7 @@ export default function LoadingScreen({ size = 64, shape = 'rounded-full' }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-white">
       <img
-        src="/favicon3.ico"
+        src="/favicon3.png"
         alt="Loading..."
         className={`animate-rotate-once ${shape}`}
         style={{
